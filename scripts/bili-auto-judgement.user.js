@@ -17,6 +17,12 @@
 /* 使用方法：进入第一个案件后按下确认，后续无需人工干预自动完成所有风纪委任务 */
 /* 仅供学习交流使用，安装后请于24小时内删除 */
 
+const CONFIG = {
+  是否合适: 0, // 0合适 | 1一般 | 2普通 | 3不合适
+  会观看吗: 1, // 0会观看 | 1不会观看
+  是否匿名: true, // true匿名 | false非匿名
+};
+
 if (location.href.indexOf("case-detail") !== -1) {
   if (confirm("[全自动风纪委] 脚本已加载，点击确认开始自动提交评价")) {
     callBackFn();
@@ -26,17 +32,23 @@ if (location.href.indexOf("case-detail") !== -1) {
 async function callBackFn() {
   return await sleep(2500)
     .then(() => {
-      document.querySelectorAll(".vote-btns .btn-group button")[0].click(); // 是否合适
-      document.querySelectorAll(".vote-btns .will-you-watch button")[0].click(); // 会观看吗
-      document.querySelector(".vote-anonymous .v-check-box__label").click(); // 勾选匿名
+      document
+        .querySelectorAll(".vote-btns .btn-group button")
+        [CONFIG["是否合适"]]?.click(); // 是否合适
+      document
+        .querySelectorAll(".vote-btns .will-you-watch button")
+        [CONFIG["会观看吗"]]?.click(); // 会观看吗
+      if (CONFIG["是否匿名"]) {
+        document.querySelector(".vote-anonymous .v-check-box__label")?.click(); // 勾选匿名
+      }
     })
     .then(() => sleep(0))
     .then(() => {
-      document.querySelector(".vote-submit button").click(); // 提交
+      document.querySelector(".vote-submit button")?.click(); // 提交
     })
     .then(() => sleep(5000))
     .then(() => {
-      document.querySelector(".vote-result button").click(); // 跳转下一题
+      document.querySelector(".vote-result button")?.click(); // 跳转下一题
     })
     .then(() => sleep(0))
     .then(() => {
@@ -44,7 +56,7 @@ async function callBackFn() {
     })
     .catch((err) => {
       console.error(err);
-      if (confirm("[全自动风纪委] 出错了，请刷新重试。")) {
+      if (confirm("[全自动风纪委] 出错了，点击确定刷新。")) {
         location.reload();
       }
     });
