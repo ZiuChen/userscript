@@ -9,7 +9,8 @@
 // @downloadURL  https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/scripts/bili-auto-judgement.user.js
 // @match        https://www.bilibili.com/judgement/*
 // @icon         https://cdn.jsdelivr.net/gh/ZiuChen/ZiuChen@main/avatar.jpg
-// @grant        MIT
+// @grant        none
+// @license      MIT
 // ==/UserScript==
 
 /* 原理：DOM操作模拟点击，不会被检测异常 */
