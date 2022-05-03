@@ -3,7 +3,7 @@
 // @description  进入评价界面自动开始提交风纪委评价
 // @namespace    http://tampermonkey.net
 // @supportURL   https://github.com/ZiuChen/userscript
-// @version      0.3
+// @version      0.4
 // @author       ZiuChen
 // @updateURL    https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/scripts/bili-auto-judgement.user.js
 // @downloadURL  https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/scripts/bili-auto-judgement.user.js
@@ -23,11 +23,11 @@ const CONFIG = {
   是否匿名: true, // true匿名 | false非匿名
 };
 
-if (location.href.indexOf("case-detail") !== -1) {
-  if (confirm("[全自动风纪委] 脚本已加载，点击确认开始自动提交评价")) {
-    callBackFn();
-  }
-}
+alert("[全自动风纪委] 脚本已加载，进入第一个案件后按下回车自动开始评价");
+document.addEventListener("keydown", (e) => {
+  if (e.keyCode !== 13 || location.href.indexOf("index") !== -1) return false;
+  callBackFn();
+});
 
 async function callBackFn() {
   return await sleep(2500)
