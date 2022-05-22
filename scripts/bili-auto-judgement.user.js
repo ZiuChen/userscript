@@ -3,12 +3,12 @@
 // @description  进入评价界面自动开始提交风纪委评价
 // @namespace    http://tampermonkey.net
 // @supportURL   https://github.com/ZiuChen/userscript
-// @version      0.5
+// @version      0.6
 // @author       ZiuChen
-// @updateURL    https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/scripts/bili-auto-judgement.user.js
-// @downloadURL  https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/scripts/bili-auto-judgement.user.js
+// @updateURL    https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/scripts/bili-auto-judgement.user.js
+// @downloadURL  https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/scripts/bili-auto-judgement.user.js
 // @match        https://www.bilibili.com/judgement/*
-// @icon         https://cdn.jsdelivr.net/gh/ZiuChen/ZiuChen@main/avatar.jpg
+// @icon         https://fastly.jsdelivr.net/gh/ZiuChen/ZiuChen@main/avatar.jpg
 // @grant        none
 // @license      MIT
 // ==/UserScript==
