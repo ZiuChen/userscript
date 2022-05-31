@@ -1,6 +1,7 @@
 /**
  * @name v2FreeAutoCheckIn.js
  * @author ZiuChen
+ * @version 0.2
  * @Licence MIT
  */
 
@@ -19,6 +20,7 @@ async function pushPlus(data) {
     body: JSON.stringify(data)
   })
     .then((res) => res.json())
+    .then((json) => console.log(json))
     .catch((err) => console.log(err))
 }
 
@@ -44,6 +46,6 @@ async function checkIn() {
     .catch((err) => console.log(err))
 }
 
-exports.main = async function remind() {
+exports.main_handler = async function remind() {
   return await checkIn()
 }
