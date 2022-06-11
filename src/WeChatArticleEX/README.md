@@ -1,5 +1,7 @@
 ## 微信推送浏览功能拓展
 
+[脚本主页](https://github.com/ZiuChen/userscript)
+
 ### ✨ 主要功能：
 
 * **悬停快速预览/复制/跳转文章封面图**
