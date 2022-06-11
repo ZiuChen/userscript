@@ -10,7 +10,7 @@
 // @require      http://libs.baidu.com/jquery/2.0.0/jquery.min.js
 // @icon         https://fastly.jsdelivr.net/gh/ZiuChen/ZiuChen@main/avatar.jpg
 // @grant        none
-// @licence      MIT
+// @license      MIT
 // ==/UserScript==
 
 $(".common-link-icon-frame-style-3:last").append(
