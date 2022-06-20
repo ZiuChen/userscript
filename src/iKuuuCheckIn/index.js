@@ -6,7 +6,7 @@
  */
 
 const fetch = require("node-fetch")
-const PushPlus = require("./lib/PushPlus")
+const PushPlus = require("../lib/PushPlus")
 const iKuuuCookie = process.env["iKuuuCookie"]
 const iKuuuURL = "https://ikuuu.ltd/user/checkin"
 

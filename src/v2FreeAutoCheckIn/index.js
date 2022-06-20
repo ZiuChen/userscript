@@ -6,7 +6,7 @@
  */
 
 const fetch = require("node-fetch")
-const PushPlus = require("./lib/PushPlus")
+const PushPlus = require("../lib/PushPlus")
 const v2freeCookie = process.env["v2freeCookie"]
 const v2freeURL = "https://w1.v2free.net/user/checkin"
 
