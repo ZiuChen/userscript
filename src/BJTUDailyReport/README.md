@@ -27,5 +27,5 @@ node index.js
 
 云函数部署环境下：
 
-* **（必须）**需要将 `PushPlusToken` 加入环境变量
-* **（可选）**将`Cookie`加入环境变量，其key为 `DailyReportCookie`
+* **（必须）** 需要将 `PushPlusToken` 加入环境变量
+* **（可选）** 将`Cookie`加入环境变量，其key为 `DailyReportCookie`
