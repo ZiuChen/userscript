@@ -58,7 +58,7 @@ const main = () => {
   })
     .then((res) => res.json())
     .then(({ e, m, d }) => {
-      const result = `已执行每日上报: [${e}] ${m} ${d}`
+      const result = `已执行每日上报: [${e}] ${m} ${JSON.stringify(d)}`
       console.log(result)
       return PushPlus({
         title: "已执行每日上报",
