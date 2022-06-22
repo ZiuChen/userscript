@@ -57,11 +57,12 @@ const main = () => {
     body: preProcess(data)
   })
     .then((res) => res.json())
-    .then((json) => {
-      console.log(json)
+    .then(({ e, m, d }) => {
+      const result = `已执行每日上报: [${e}] ${m} ${d}`
+      console.log(result)
       return PushPlus({
         title: "已执行每日上报",
-        content: json.m
+        content: result
       })
     })
 }
