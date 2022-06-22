@@ -1,8 +1,8 @@
 const fetch = require("node-fetch")
-const PushPlusToken = process.env["PushPlusToken"] ?? console.log("环境变量PushPlusToken未定义")
+const PushPlusToken = process.env["PushPlusToken"]
 const PushPlusURL = "http://www.pushplus.plus/send"
 module.exports = async function pushPlus({
-  token = PushPlusToken,
+  token = PushPlusToken ?? console.log("环境变量PushPlusToken未定义"),
   title,
   content,
   topic,
