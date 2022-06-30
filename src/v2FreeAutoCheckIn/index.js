@@ -36,5 +36,5 @@ const CheckIn = async () => {
 }
 
 exports.main_handler = async () => {
-  return await CheckIn()
+  return CheckIn()
 }

@@ -44,7 +44,7 @@ const preProcess = (data) => {
   return obj2FormData(data)
 }
 
-const main = () => {
+const CheckIn = () => {
   if (!DailyReportCookie) {
     console.log("环境变量DailyReportCookie未定义")
     return false
@@ -68,5 +68,5 @@ const main = () => {
 }
 
 exports.main_handler = async () => {
-  return await main()
+  return CheckIn()
 }
