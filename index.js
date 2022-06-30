@@ -3,7 +3,7 @@ const { main_handler: iKuuu } = require("./src/iKuuuCheckIn")
 const { main_handler: dailyReport } = require("./src/BJTUDailyReport")
 
 exports.main_handler = async () => {
-  v2Free()
-  iKuuu()
-  dailyReport()
+  await v2Free()
+  await iKuuu()
+  await dailyReport()
 }
