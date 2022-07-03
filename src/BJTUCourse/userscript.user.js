@@ -7,6 +7,8 @@
 // @supportURL       https://github.com/ZiuChen/userscript
 // @license          MIT
 // @match            https://aa.bjtu.edu.cn/course_selection/*
+// @updateURL        https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/BJTUCourse/userscript.user.js
+// @downloadURL      https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/BJTUCourse/userscript.user.js
 // @namespace        https://github.com/ZiuChen/userscript
 // @require          https://cdn.jsdelivr.net/npm/table-to-json@1.0.0/lib/jquery.tabletojson.min.js
 // @grant            GM_notification
