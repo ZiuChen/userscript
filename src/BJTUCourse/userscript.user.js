@@ -13,27 +13,15 @@
 // @icon             https://fastly.jsdelivr.net/gh/ZiuChen/ZiuChen@main/avatar.jpg
 // ==/UserScript==
 
+// 使用前请完整阅读 README.md
 const config = {
   tableSelector: 'table', // (必须) 表格选择器, 请勿修改
-  matchName: ['40L096T:企业风险管理(B) 01'], // (必须) 匹配课程名 类型: string[], 将`课程`一栏的内容完整填入, 注意格式(包括课程号 课程名 课序号)
+  matchName: [], // (可选) 简单匹配 课程名, 将`课程`一栏的内容完整填入, 支持泛选, 若要抢某一门课, 则需完整复制课程号 课程名 课序号
+  matchPattern: [], // (可选) 高级匹配 匹配表格内的任意值, 支持泛选
   timeout: 2500 // (必须) 每次检索时间间隔(ms), 建议在抢课初期提高频率, 中后期降低频率
 }
 
-const keyMap = {
-  /* table */
-  choice: '选择',
-  index: '序号',
-  name: '课程',
-  surplus: '课余量',
-  credit: '学分',
-  type: '考试类型',
-  teacher: '上课教师',
-  't&p': '时间地点',
-  info: '选课限制说明',
-  /* status */
-  none: '无余量',
-  chosen: '已选'
-}
+const headings = ['info', 'index', 'cname', 'remain', 'credit', 'type', 'tname', 'tap', 'more']
 
 const URL = {
   _base: 'https://aa.bjtu.edu.cn/course_selection/courseselecttask/selects_action/?action=',
@@ -76,8 +64,8 @@ const log = (content, type) => {
 }
 
 const formatStatus = (string) => {
-  if (string.indexOf(keyMap['chosen']) !== -1) return 1 // 已选中
-  else if (string.indexOf(keyMap['none']) !== -1) return -1 // 无余量
+  if (string.indexOf('已选') !== -1) return 1 // 已选中
+  else if (string.indexOf('无余量') !== -1) return -1 // 无余量
   else return 0 // 未选中
 }
 
@@ -86,6 +74,7 @@ const parse2Json = (text) => {
   const table = p.parseFromString(text, 'text/html')?.querySelector(config.tableSelector)
   return $(table).tableToJSON({
     ignoreHiddenRows: false,
+    headings,
     extractor: (cellIndex, $cell) => {
       return cellIndex === 0
         ? { status: formatStatus($cell.text()), id: $cell.find('input').attr('value') }
@@ -101,78 +90,133 @@ const filter = (array, key, value) => {
 }
 
 const req = async (url, options = {}) => {
-  return fetch(url, { ...options })
-    .then((res) => res.text())
-    .then((text) => parse2Json(text))
-    .catch((err) => {
-      log('请求出错: ' + err)
-    })
+  return fetch(url, { ...options }).catch((err) => {
+    log('请求出错: ' + err)
+  })
 }
 
-const matchName = async (table) => {
-  for (const name of config.matchName) {
-    for (const c of table) {
-      const info = `[${c[keyMap['name']]} ${c[keyMap['teacher']]}] `
-      if (c[keyMap['name']] === name) {
-        log(info + '匹配成功')
-        const status = c[keyMap['choice']].status
-        if (status === 0) {
-          log(info + '有余量, 发起抢课', 'warning')
-          const f = new FormData()
-          f.append('checkboxs', c[keyMap['choice']].id)
-          req(URL.submit, {
-            method: 'POST',
-            body: f
-          }).then(() => {
-            log(info + '抢课成功', 'error')
-            GM_notification({
-              title: '抢课成功',
-              text: info,
-              timeout: 10000,
-              highlight: true
-            })
-          })
-        } else if (status === -1) {
-          log(info + '无余量')
-        } else {
-          log(info + '已抢到', 'error')
-        }
-      }
+const submit = async (id) => {
+  const f = new FormData()
+  f.append('checkboxs', id)
+  return req(URL.submit, {
+    method: 'POST',
+    body: f
+  })
+}
+
+const trialSubmit = async (c) => {
+  const info = `[${c.cname} ${c.tname}] `
+  const status = c.info.status
+  if (status === 0) {
+    log(info + '有余量, 发起抢课', 'warning')
+    submit(c.info.id).then(() => {
+      log(info + '抢课成功', 'error')
+      GM_notification({
+        title: '抢课成功',
+        text: info,
+        timeout: 10000,
+        highlight: true
+      })
+    })
+  } else if (status === -1) {
+    log(info + '无余量')
+  } else {
+    // log(info + '已抢到', 'success')
+  }
+}
+
+const matchPattern = (c, p) => {
+  const flags = []
+  for (const [key, value] of Object.entries(p)) {
+    // 遍历 pattern 的每个属性
+    if (key === 'info') continue
+    flags.push(c[key].indexOf(value) !== -1)
+  }
+  return flags.indexOf(false) === -1
+}
+
+const advanceMatch = async (table, patterns) => {
+  for (const c of table) {
+    // 遍历 Table 中每个课程
+    for (const p of patterns) {
+      // 遍历 patterns 中每个匹配规则
+      matchPattern(c, p) && trialSubmit(c)
     }
   }
 }
 
-const start = () => {
-  let count = 0
-  setInterval(() => {
-    req(URL.main)
-      .then((table) => matchName(table))
-      .then(() => {
-        log(`已检索: ${++count}次`)
-      })
-  }, config.timeout)
+const simpleMatch = async (table, nameTable) => {
+  const patterns = []
+  for (const cname of nameTable) {
+    patterns.push({ cname })
+  }
+  advanceMatch(table, patterns)
 }
 
-const appendTriggerBtn = () => {
+const cache = {
+  set: (key, value) => {
+    try {
+      const r = JSON.stringify(value)
+      return window?.localStorage.setItem(key, r)
+    } catch (error) {
+      alert('格式错误')
+      return
+    }
+  },
+  get: (key) => JSON.parse(window?.localStorage.getItem(key))
+}
+
+const start = () => {
+  let count = 0
+  const fun = async () => {
+    log(`检索第${++count}次`)
+    return req(URL.main)
+      .then((res) => res.text())
+      .then((text) => parse2Json(text))
+      .then((table) =>
+        config.matchPattern.length
+          ? advanceMatch(table, config.matchPattern)
+          : simpleMatch(
+              table,
+              config.matchName.length ? config.matchName : cache.get('simple-match')
+            )
+      )
+  }
+  fun()
+  setInterval(fun, config.timeout)
+}
+
+const viewInit = () => {
   const div = document.createElement('div')
-  const span = document.createElement('span')
+  const icon = document.createElement('i')
+  const span1 = document.createElement('span')
+  const input1 = document.createElement('input')
   const startBtn = document.createElement('button')
+  const pauseBtn = document.createElement('button')
+  const childs = [icon, span1, input1, startBtn, pauseBtn]
+  icon.className = 'fa fa-question bigger-125'
+  icon.title = '如有多个则以英文逗号 , 分隔 \n更多信息, 请见README'
+  icon.click = () => window.open()
   startBtn.className = 'btn btn-mini btn-danger'
   startBtn.innerText = '开始抢课'
-  startBtn.style = ' margin: 5px;'
   startBtn.onclick = start
-  span.innerText = '待抢课程: ' + JSON.stringify(config.matchName)
+  pauseBtn.className = 'btn btn-mini btn-success'
+  pauseBtn.innerText = '中止抢课'
+  pauseBtn.onclick = () => window.location.reload()
+  span1.innerText = '简单匹配'
+  input1.id = 'simple-match'
+  input1.placeholder = '简单匹配'
+  input1.style['width'] = '500px'
+  input1.value = cache.get('simple-match')
+  input1.onchange = (e) => cache.set('simple-match', e.target.value.split(','))
   div.style = 'display: flex; justify-content: flex-end; align-items: center;'
-  div.append(span, startBtn)
+  childs.forEach((c) => (c.style['margin-right'] = '5px'))
+  div.append(...childs)
   document.querySelector('form')?.after(div)
 }
 
 const main = () => {
-  if (config.matchName.length === 0) {
-    alert('尚未配置 config.matchName 请配置后使用脚本')
-    return
-  }
-  appendTriggerBtn()
+  viewInit()
 }
 
 main()
