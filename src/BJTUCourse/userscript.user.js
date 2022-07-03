@@ -16,8 +16,7 @@
 const config = {
   tableSelector: 'table', // (必须) 表格选择器, 请勿修改
   matchName: ['40L096T:企业风险管理(B) 01'], // (必须) 匹配课程名 类型: string[], 将`课程`一栏的内容完整填入, 注意格式(包括课程号 课程名 课序号)
-  timeout: 2500, // (必须) 每次检索时间间隔(ms), 建议在抢课初期提高频率, 中后期降低频率
-  advanceQuery: '' // (可选) 传入查询字符串筛选掉部分课程, 提高检索速度
+  timeout: 2500 // (必须) 每次检索时间间隔(ms), 建议在抢课初期提高频率, 中后期降低频率
 }
 
 const keyMap = {
@@ -43,11 +42,7 @@ const URL = {
   _delete: 'delete',
   get main() {
     const suffix = '&iframe=school&page=1&perpage=1000'
-    if (config.advanceQuery) {
-      return this._base + config.advanceQuery + suffix
-    } else {
-      return this._base + this._main + suffix
-    }
+    return this._base + this._main + suffix
   },
   get submit() {
     return this._base + this._submit
