@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name             BJTU抢课脚本
 // @description      北京交通大学抢课脚本
-// @version          0.0.1
+// @version          0.0.2
 // @author           ZiuChen
 // @source           https://github.com/ZiuChen/userscript
 // @supportURL       https://github.com/ZiuChen/userscript
@@ -11,7 +11,9 @@
 // @downloadURL      https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/BJTUCourse/userscript.user.js
 // @namespace        https://github.com/ZiuChen/userscript
 // @require          https://fastly.jsdelivr.net/npm/table-to-json@1.0.0/lib/jquery.tabletojson.min.js
+// @connect          pushplus.plus
 // @grant            GM_notification
+// @grant            GM_xmlhttpRequest
 // @icon             https://fastly.jsdelivr.net/gh/ZiuChen/ZiuChen@main/avatar.jpg
 // ==/UserScript==
 
@@ -20,10 +22,11 @@ const config = {
   tableSelector: 'table', // (必须) 表格选择器, 请勿修改
   matchName: [], // (可选) 简单匹配 课程名, 将`课程`一栏的内容完整填入, 支持泛选, 若要抢某一门课, 则需完整复制课程号 课程名 课序号
   matchPattern: [], // (可选) 高级匹配 匹配表格内的任意值, 支持泛选
+  pushPlusToken: '', // (可选) 选课成功后支持通过 PushPlus推送结果
   timeout: 2500 // (必须) 每次检索时间间隔(ms), 建议在抢课初期提高频率, 中后期降低频率
 }
 
-const headings = ['info', 'index', 'cname', 'remain', 'credit', 'type', 'tname', 'tap', 'more']
+const patterns = [] // 代码环境下的匹配任务
 
 const URL = {
   _base: 'https://aa.bjtu.edu.cn/course_selection/courseselecttask/selects_action/?action=',
@@ -43,51 +46,28 @@ const URL = {
 }
 
 const log = (content, type) => {
-  let time = new Date().toLocaleTimeString()
-  let color = ''
-  switch (type) {
-    case 'success':
-      color = 'green'
-      break
-    case 'warning':
-      color = 'orange'
-      break
-    case 'error':
-      color = 'red'
-      break
-    case 'info':
-      color = 'blue'
-      break
-    default:
-      color = 'grey'
-      break
-  }
+  const cMap = { success: 'green', warning: 'orange', error: 'red', info: 'blue', none: 'grey' }
+  const color = cMap[type] === undefined ? cMap['none'] : cMap[type]
+  const time = new Date().toLocaleTimeString()
   return console.log(`%c[${time}]` + `%c ${content}`, 'color: #005bac;', `color: ${color};`)
-}
-
-const formatStatus = (string) => {
-  if (string.indexOf('已选') !== -1) return 1 // 已选中
-  else if (string.indexOf('无余量') !== -1) return -1 // 无余量
-  else return 0 // 未选中
 }
 
 const parse2Json = (text) => {
   const p = new DOMParser()
   const table = p.parseFromString(text, 'text/html')?.querySelector(config.tableSelector)
+  const toStatus = (string) => {
+    if (string.indexOf('已选') !== -1) return 1 // 已选中
+    else if (string.indexOf('无余量') !== -1) return -1 // 无余量
+    else return 0 // 未选中
+  }
   return $(table).tableToJSON({
     ignoreHiddenRows: false,
-    headings,
+    headings: ['info', 'index', 'cname', 'remain', 'credit', 'type', 'tname', 'tap', 'more'],
     extractor: (cellIndex, $cell) => {
       return cellIndex === 0
-        ? { status: formatStatus($cell.text()), id: $cell.find('input').attr('value') }
+        ? { status: toStatus($cell.text()), id: $cell.find('input').attr('value') }
         : $cell.text()
     }
-  })
-}
-
-const filter = (array, key, value) => {
-  return array.filter((item) => {
-    return item[key] === value
   })
 }
 
@@ -106,24 +86,54 @@ const submit = async (id) => {
   })
 }
 
-const trialSubmit = async (c) => {
+const XHR = (XHROptions) => {
+  // 仅用于跨域请求
+  return new Promise((resolve) => {
+    const onerror = (error) => resolve(undefined)
+    XHROptions.timeout = 30 * 1000
+    XHROptions.onload = (res) => resolve(res.response)
+    XHROptions.onerror = onerror
+    XHROptions.ontimeout = onerror
+    GM_xmlhttpRequest(XHROptions)
+  })
+}
+
+const sendMsg = async (info) => {
+  config?.pushPlusToken &&
+    XHR({
+      anonymous: true,
+      method: 'POST',
+      url: `http://www.pushplus.plus/send`,
+      data: JSON.stringify({
+        token: config?.pushPlusToken,
+        title: '抢课成功',
+        content: info
+      }),
+      responseType: 'json'
+    }).then(({ code, msg, data }) =>
+      log(`PushPlus推送结果: [${code}] ${msg} 消息流水号: ${data}`, 'success')
+    )
+  GM_notification({
+    title: '抢课成功',
+    text: info,
+    timeout: 10000,
+    highlight: true
+  })
+}
+
+const trialSubmit = async (c, p) => {
   const info = `[${c.cname} ${c.tname}] `
   const status = c.info.status
   if (status === 0) {
     log(info + '有余量, 发起抢课', 'warning')
-    submit(c.info.id).then(() => {
-      log(info + '抢课成功', 'error')
-      GM_notification({
-        title: '抢课成功',
-        text: info,
-        timeout: 10000,
-        highlight: true
-      })
-    })
+    submit(c.info.id)
   } else if (status === -1) {
     log(info + '无余量')
   } else {
-    // log(info + '已抢到', 'success')
+    log(info + '抢课成功', 'error')
+    sendMsg(info)
+    const index = patterns.indexOf(p)
+    patterns.splice(index, 1) // 移除当前匹配任务
   }
 }
 
@@ -142,47 +152,43 @@ const advanceMatch = async (table, patterns) => {
     // 遍历 Table 中每个课程
     for (const p of patterns) {
       // 遍历 patterns 中每个匹配规则
-      matchPattern(c, p) && trialSubmit(c)
+      matchPattern(c, p) && trialSubmit(c, p)
     }
   }
 }
 
-const simpleMatch = async (table, nameTable) => {
-  const patterns = []
-  for (const cname of nameTable) {
-    patterns.push({ cname })
+const toMatchPattern = (matchNameTable) => {
+  const ptns = []
+  for (const cname of matchNameTable) {
+    ptns.push({ cname })
   }
-  advanceMatch(table, patterns)
+  return ptns
 }
 
 const cache = {
-  set: (key, value) => {
-    try {
-      const r = JSON.stringify(value)
-      return window?.localStorage.setItem(key, r)
-    } catch (error) {
-      alert('格式错误')
-      return
-    }
-  },
+  set: (key, value) => window?.localStorage.setItem(key, JSON.stringify(value)),
   get: (key) => JSON.parse(window?.localStorage.getItem(key))
+}
+
+const addMatchTask = () => {
+  const flgs = [config.matchPattern.length, config.matchName.length]
+  const ptns = flgs[0]
+    ? config.matchPattern
+    : flgs[1]
+    ? toMatchPattern(config.matchName)
+    : toMatchPattern(cache.get('simple-match'))
+  patterns.push(...ptns)
 }
 
 const start = () => {
   let count = 0
+  addMatchTask()
   const fun = async () => {
     log(`检索第${++count}次`)
     return req(URL.main)
       .then((res) => res.text())
       .then((text) => parse2Json(text))
-      .then((table) =>
-        config.matchPattern.length
-          ? advanceMatch(table, config.matchPattern)
-          : simpleMatch(
-              table,
-              config.matchName.length ? config.matchName : cache.get('simple-match')
-            )
-      )
+      .then((table) => advanceMatch(table, patterns))
   }
   fun()
   setInterval(fun, config.timeout)
