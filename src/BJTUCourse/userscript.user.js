@@ -17,7 +17,6 @@ const config = {
   tableSelector: 'table', // (必须) 表格选择器, 请勿修改
   matchName: ['40L096T:企业风险管理(B) 01'], // (必须) 匹配课程名 类型: string[], 将`课程`一栏的内容完整填入, 注意格式(包括课程号 课程名 课序号)
   timeout: 2500, // (必须) 每次检索时间间隔(ms), 建议在抢课初期提高频率, 中后期降低频率
-  showActualId: true, // (必须) 是否显示课程真实 ID 以供填入上方 `target` 数组
   advanceQuery: '' // (可选) 传入查询字符串筛选掉部分课程, 提高检索速度
 }
 
@@ -159,16 +158,6 @@ const start = () => {
   }, config.timeout)
 }
 
-const displayActualId = () => {
-  const checkboxs = document.querySelectorAll('.checkbox')
-  for (const c of checkboxs) {
-    const span = document.createElement('span')
-    span.innerHTML = c.value
-    span.className = 'actual-id'
-    c.after(span)
-  }
-}
-
 const appendTriggerBtn = () => {
   const div = document.createElement('div')
   const span = document.createElement('span')
@@ -189,7 +178,6 @@ const main = () => {
     return
   }
   appendTriggerBtn()
-  !config.showActualId || displayActualId()
 }
 
 main()
