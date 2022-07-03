@@ -10,7 +10,7 @@
 // @updateURL        https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/BJTUCourse/userscript.user.js
 // @downloadURL      https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/BJTUCourse/userscript.user.js
 // @namespace        https://github.com/ZiuChen/userscript
-// @require          https://cdn.jsdelivr.net/npm/table-to-json@1.0.0/lib/jquery.tabletojson.min.js
+// @require          https://fastly.jsdelivr.net/npm/table-to-json@1.0.0/lib/jquery.tabletojson.min.js
 // @grant            GM_notification
 // @icon             https://fastly.jsdelivr.net/gh/ZiuChen/ZiuChen@main/avatar.jpg
 // ==/UserScript==
