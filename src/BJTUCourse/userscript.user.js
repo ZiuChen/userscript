@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name             BJTU抢课脚本
 // @description      北京交通大学抢课脚本
-// @version          0.0.2
-// @author           ZiuChen
+// @version          0.0.3
+// @author           Ziu
 // @source           https://github.com/ZiuChen/userscript
 // @supportURL       https://github.com/ZiuChen/userscript
 // @license          MIT
@@ -19,23 +19,25 @@
 
 // 使用前请完整阅读 README.md
 const config = {
-  tableSelector: 'table', // (必须) 表格选择器, 请勿修改
-  matchName: [], // (可选) 简单匹配 课程名, 将`课程`一栏的内容完整填入, 支持泛选, 若要抢某一门课, 则需完整复制课程号 课程名 课序号
-  matchPattern: [], // (可选) 高级匹配 匹配表格内的任意值, 支持泛选
-  pushPlusToken: '', // (可选) 选课成功后支持通过 PushPlus推送结果
-  timeout: 2500 // (必须) 每次检索时间间隔(ms), 建议在抢课初期提高频率, 中后期降低频率
+  simpleMatchPatterns: [], // (可选) 简单匹配 课程名 支持泛选
+  advanceMatchPatterns: [], // (可选) 高级匹配 匹配表格内的任意属性 支持泛选
+  advanceQuery: '', // (可选) 查询字符串 指定需要检索的数据源
+  pushPlusToken: '', // (可选) PushPlusToken
+  timeout: 2500 // (必须) 检索时间间隔(ms)
 }
 
-const patterns = [] // 代码环境下的匹配任务
+const GlobalTasks = [] // 代码环境下的匹配任务
 
 const URL = {
+  selectPage: 'https://aa.bjtu.edu.cn/course_selection/courseselecttask/selects/',
   _base: 'https://aa.bjtu.edu.cn/course_selection/courseselecttask/selects_action/?action=',
   _main: 'load',
   _submit: 'submit',
   _delete: 'delete',
+  _advanceQuery: config.advanceQuery || '',
   get main() {
     const suffix = '&iframe=school&page=1&perpage=1000'
-    return this._base + this._main + suffix
+    return this._base + this._main + this._advanceQuery + suffix
   },
   get submit() {
     return this._base + this._submit
@@ -52,9 +54,13 @@ const log = (content, type) => {
   return console.log(`%c[${time}]` + `%c ${content}`, 'color: #005bac;', `color: ${color};`)
 }
 
-const parse2Json = (text) => {
+const parse2DOM = (text, selector) => {
   const p = new DOMParser()
-  const table = p.parseFromString(text, 'text/html')?.querySelector(config.tableSelector)
+  return p.parseFromString(text, 'text/html')?.querySelector(selector)
+}
+
+const parse2Json = (text) => {
+  const table = parse2DOM(text, 'table')
   const toStatus = (string) => {
     if (string.indexOf('已选') !== -1) return 1 // 已选中
     else if (string.indexOf('无余量') !== -1) return -1 // 无余量
@@ -79,8 +85,17 @@ const req = async (url, options = {}) => {
 
 const submit = async (id) => {
   const f = new FormData()
-  f.append('checkboxs', id)
+  f.append('checkboxs', id) // 验证码: hashkey & answer
   return req(URL.submit, {
+    method: 'POST',
+    body: f
+  })
+}
+
+const remove = async (id) => {
+  const f = new FormData()
+  f.append('select_id', id)
+  return req(URL.delete, {
     method: 'POST',
     body: f
   })
@@ -121,6 +136,44 @@ const sendMsg = async (info) => {
   })
 }
 
+const fetchSelectedTable = async () => {
+  return req(URL.selectPage)
+    .then((res) => res.text())
+    .then((text) => parse2DOM(text, '.table'))
+    .then((tableDOM) =>
+      $(tableDOM).tableToJSON({
+        ignoreHiddenRows: false,
+        headings: ['id', 'cname', 'remain', 'credit', 'type', 'cstatus', 'tname', 'tap'],
+        extractor: (cellIndex, $cell) => {
+          return cellIndex === 0 ? $cell.find('a').attr('data-pk') : $cell.text()
+        }
+      })
+    )
+}
+
+const modifyTask = (p) => {
+  const index = GlobalTasks.indexOf(p)
+  GlobalTasks[index].throw = undefined
+}
+
+const removeTask = (p) => {
+  const index = GlobalTasks.indexOf(p)
+  GlobalTasks.splice(index, 1)
+}
+
+const handleCourseThrow = async (p) => {
+  const selectTable = await fetchSelectedTable()
+  let flg = false
+  for (const sc of selectTable) {
+    if (sc.cname.indexOf(p.throw) !== -1) {
+      flg = true
+      remove(sc.id) // 抛掉 `throw` 指定的课程
+      modifyTask(p)
+    }
+  }
+  if (!flg) log('未匹配到throw课程', 'error')
+}
+
 const trialSubmit = async (c, p) => {
   const info = `[${c.cname} ${c.tname}] `
   const status = c.info.status
@@ -128,36 +181,42 @@ const trialSubmit = async (c, p) => {
     log(info + '有余量, 发起抢课', 'warning')
     submit(c.info.id)
   } else if (status === -1) {
-    log(info + '无余量')
+    // 无余量
   } else {
-    log(info + '抢课成功', 'error')
-    sendMsg(info)
-    const index = patterns.indexOf(p)
-    patterns.splice(index, 1) // 移除当前匹配任务
+    if (!p?.throw) {
+      log(info + '抢课成功', 'error')
+      sendMsg(info)
+      removeTask(p) // 移除当前匹配任务
+    } else {
+      // 配置了 `throw`属性 需要先抛课再执行抢课
+      log(info + '抛出指定课堂', 'error')
+      handleCourseThrow(p)
+    }
   }
 }
 
-const matchPattern = (c, p) => {
+const isMatched = (c, p) => {
   const flags = []
   for (const [key, value] of Object.entries(p)) {
     // 遍历 pattern 的每个属性
     if (key === 'info') continue
+    if (key === 'throw') continue
     flags.push(c[key].indexOf(value) !== -1)
   }
   return flags.indexOf(false) === -1
 }
 
-const advanceMatch = async (table, patterns) => {
+const advanceMatch = async (table, tasks) => {
   for (const c of table) {
     // 遍历 Table 中每个课程
-    for (const p of patterns) {
-      // 遍历 patterns 中每个匹配规则
-      matchPattern(c, p) && trialSubmit(c, p)
+    for (const p of tasks) {
+      // 遍历 tasks 中每个匹配规则
+      isMatched(c, p) && trialSubmit(c, p)
     }
   }
 }
 
-const toMatchPattern = (matchNameTable) => {
+const toAdvancePattern = (matchNameTable) => {
   const ptns = []
   for (const cname of matchNameTable) {
     ptns.push({ cname })
@@ -171,27 +230,31 @@ const cache = {
 }
 
 const addMatchTask = () => {
-  const flgs = [config.matchPattern.length, config.matchName.length]
+  const flgs = [config.advanceMatchPatterns.length, config.simpleMatchPatterns.length]
   const ptns = flgs[0]
-    ? config.matchPattern
+    ? config.advanceMatchPatterns
     : flgs[1]
-    ? toMatchPattern(config.matchName)
-    : toMatchPattern(cache.get('simple-match'))
-  patterns.push(...ptns)
+    ? toAdvancePattern(config.simpleMatchPatterns)
+    : toAdvancePattern(cache.get('simple-match'))
+  GlobalTasks.push(...ptns)
 }
 
 const start = () => {
   let count = 0
   addMatchTask()
   const fun = async () => {
+    if (!GlobalTasks.length) {
+      log('任务列表为空, 本次抢课结束', 'success')
+      return clearInterval(interval)
+    }
     log(`检索第${++count}次`)
     return req(URL.main)
       .then((res) => res.text())
       .then((text) => parse2Json(text))
-      .then((table) => advanceMatch(table, patterns))
+      .then((table) => advanceMatch(table, GlobalTasks))
   }
   fun()
-  setInterval(fun, config.timeout)
+  const interval = setInterval(fun, config.timeout || 2500)
 }
 
 const viewInit = () => {
