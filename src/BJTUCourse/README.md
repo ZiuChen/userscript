@@ -54,7 +54,7 @@ advanceMatchPatterns: [{ cname: '修身养性与大学生活', tname: '晓明明
 ```js
 advanceMatchPatterns: [
   { cname: '神奇的基因', tap: '星期二 第2节' },
-  { cname: '生命科学纵横', tap: '星期三' }
+  { cname: '生命科学纵横', tap: '星期日' }
 ]
 ```
 
