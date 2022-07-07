@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         北交大iCalender课表生成
 // @namespace    https://github.com/ZiuChen/userscript
-// @version      1.5
+// @version      1.5.1
 // @description  导出ics/csv/json格式的日程文件！ 💻支持多端同步！ 📝支持Excel编辑！ 📆支持导入各系统原生日历！
 // @author       ZiuChen
 // @updateURL    https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/BJTU-Schedule-ics-csvGenerator/generator.js
@@ -17,7 +17,7 @@
 
 "use strict"
 
-const defaultStartMonday = "2022-02-28" // 第一个教学周的第一个周一
+const defaultStartMonday = "2022-08-29" // 第一个教学周的第一个周一
 
 if (localStorage.getItem("defaultStartMonday") === null) {
   localStorage.setItem("defaultStartMonday", defaultStartMonday)
