@@ -9,7 +9,7 @@
 | [Mcmod快捷搜索](./src/McmodQuickSearch)                      | 一键跳转到CurseForge，全速下载模组           |  用户脚本   | `0.2.2` | 2022/06/11 | [Install](https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/McmodQuickSearch/userscript.user.js) |
 | [iKuuu自动签到](./src/iKuuuCheckIn)                          | 部署云函数运行，支持PushPlus微信推送         | Node.js脚本 |  `0.1`  | 2022/06/13 |                              /                               |
 | [BJTU每日上报](./src/BJTUDailyReport)                        | 部署云函数运行，支持PushPlus微信推送         | Node.js脚本 | `0.0.1` | 2022/06/20 |                              /                               |
-| [BJTU抢课脚本](./src/BJTUCourse)                             | 支持按预定规则抢课/抛课/换课                 |  用户脚本   | `0.0.1` | 2022/07/03 | [Install](https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/BJTUCourse/userscript.user.js) |
+| [BJTU抢课脚本](./src/BJTUCourse)                             | 支持按预定规则抢课/抛课/换课                 |  用户脚本   | `0.0.3` | 2022/07/06 | [Install](https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/BJTUCourse/userscript.user.js) |
 
 **具体介绍详见项目文件夹内的README.md**
 
