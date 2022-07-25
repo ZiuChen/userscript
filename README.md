@@ -10,7 +10,7 @@
 | [iKuuu自动签到](./src/iKuuuCheckIn)                          | 部署云函数运行，支持PushPlus微信推送         | Node.js |  `0.1`  | 2022/06/13 |                              /                               |
 | [BJTU每日上报](./src/BJTUDailyReport)                        | 部署云函数运行，支持PushPlus微信推送         | Node.js | `0.0.1` | 2022/06/20 |                              /                               |
 | [BJTU抢课脚本](./src/BJTUCourse)                             | 支持按预定规则抢课/抛课/换课                 | 浏览器 | `0.0.3` | 2022/07/06 | [Install](https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/BJTUCourse/userscript.user.js) |
-| [掘金批量获取Cookie](./src\JuejinCookie\README.md) | 批量获取稀土掘金账号的Cookie | Node.js | `0.0.1` | 2022/07/25 | / |
+| [掘金批量获取Cookie](./src/JuejinCookie/README.md) | 批量获取稀土掘金账号的Cookie | Node.js | `0.0.1` | 2022/07/25 | / |
 
 **具体介绍详见项目文件夹内的README.md**
 
