@@ -70,4 +70,16 @@ const calcGapPosition = async (page, src) => {
   return (distance.value * 340) / 552
 }
 
-module.exports = { calcGapPosition }
+const delay = (timeout) => {
+  return new Promise((res) => {
+    setTimeout(() => {
+      res()
+    }, timeout)
+  })
+}
+
+const randInt = (min, max = 10) => {
+  return parseInt(Math.random() * (max - min + 1) + min, 10)
+}
+
+module.exports = { calcGapPosition, delay, randInt }

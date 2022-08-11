@@ -20,6 +20,7 @@ const getCookie = async (mobile, password) => {
     await page.click('.clickable')
     await page.waitForTimeout(1000)
     await page.waitForSelector('input[name=loginPhoneOrEmail]')
+    console.log('--------------------')
     console.log(`输入账号 ${mobile}`)
     await page.type('input[name=loginPhoneOrEmail]', mobile, { delay: 50 })
     console.log(`输入密码 ****`)
@@ -84,6 +85,7 @@ const getCookie = async (mobile, password) => {
       return false
     }
     console.log(`登录成功`)
+    console.log('--------------------')
     await page.waitForTimeout(2 * 1000)
     const cookie = await page.cookies()
     const cookieStr = formatCookie(cookie)
