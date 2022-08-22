@@ -1,14 +1,14 @@
 /**
  * @name iKuuuCheckIn.js
  * @author ZiuChen
- * @version 0.1
+ * @version 0.2
  * @Licence MIT
  */
 
 const fetch = require("node-fetch")
 const PushPlus = require("../lib/PushPlus")
 const iKuuuCookie = process.env["iKuuuCookie"]
-const iKuuuURL = "https://ikuuu.ltd/user/checkin"
+const iKuuuURL = "https://ikuuu.dev/user/checkin"
 
 const CheckIn = async () => {
   if (!iKuuuCookie) {
