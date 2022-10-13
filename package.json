@@ -1,22 +1,6 @@
 {
-  "name": "userscript",
-  "version": "1.0.0",
-  "description": "userscripts",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ZiuChen/userscript.git"
-  },
-  "author": "ZiuChen",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ZiuChen/userscript/issues"
-  },
-  "homepage": "https://github.com/ZiuChen/userscript#readme",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "form-data": "^4.0.0",
     "node-fetch": "^2.6.7"
   }
