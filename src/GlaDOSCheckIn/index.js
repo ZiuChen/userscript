@@ -1,3 +1,10 @@
+/**
+ * @name GlaDOSCheckIn.js
+ * @author ZiuChen
+ * @version 0.0.1
+ * @Licence MIT
+ */
+
 const fetch = require('node-fetch')
 const PushPlus = require('../lib/PushPlus')
 const GlaDOSCookie = process.env['GlaDOSCookie']
