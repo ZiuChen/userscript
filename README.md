@@ -14,6 +14,7 @@
 | [掘金每日沸点](./src/JuejinDailyPublish) | 掘金每日沸点任务 | Auto.js | `0.0.1` | 2022/08/12 | / |
 | [GlaDOS自动签到](./src/GlaDOSCheckIn) | 部署云函数运行，支持PushPlus微信推送 | Node.js | `0.0.1` | 2022/11/06 | / |
 | [uTools快捷命令合集](./src/uToolsQuickCommands) | 自己写的一些快捷命令脚本 | uTools | / | 2022/11/06 | / |
+| [掘金梭哈抽奖脚本](./src/JuejinDraw) | 稀土掘金梭哈抽奖脚本 | 浏览器 | / | 2023/01/12 | / |
 
 **具体介绍详见项目文件夹内的README.md**
 
