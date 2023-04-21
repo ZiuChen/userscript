@@ -7,7 +7,7 @@
 
 > 注意：程序读取的配置文件名为 `config.js`
 > 
-> 请在运行前**自行抓包**获取数据填入 `sample.config.js` 后，**将其重命名为 `config.js`**
+> 请在运行前**自行抓包**获取数据填入 `config.js` 中
 
 ## Usage
 
@@ -27,5 +27,5 @@ node index.js
 
 云函数部署环境下：
 
-* **（必须）**  需要将 `PushPlusToken` 加入环境变量
+* **（必须）**  需要将 `PUSHPLUS_TOKEN` 加入环境变量
 * **（可选）**  将`Cookie`加入环境变量，其key为 `DailyReportCookie`
