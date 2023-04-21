@@ -5,7 +5,12 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-dotenv.config({ path: path.resolve(__dirname, '.env') })
+// load .env from dist or public depends on EXEC_WITH_TSX variable passed from package.json
+const fpath = path.resolve(
+  process.env.EXEC_WITH_TSX ? path.resolve(process.cwd(), 'public') : __dirname,
+  '.env'
+)
+dotenv.config({ path: fpath })
 
 export const pushplusToken = process.env.PUSHPLUS_TOKEN
 export const gladosCookies = JSON.parse(process.env.GLADOS_COOKIES || '[]')

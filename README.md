@@ -14,17 +14,7 @@
 - v2FreeCheckin
   - v2Free签到脚本
 
-> **Note**
-> 
-> Remember to rename `.sample.env` to `.env` and fill in the blanks.
-> 
-> values in `.env` must be one-line
-
-```bash
-pnpm i # 安装依赖
-pnpm build # 编译JS 部署dist目录到云函数
-pnpm start # 本地运行
-```
+[使用指南 Deploy Guide](./docs/Deploy%20Guide.md)
 
 ### 用户脚本
 
