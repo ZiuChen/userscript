@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "vite build",
-    "start": "node -e 'const { main_handler } = require(\"./dist/index.js\"); main_handler()'"
+    "start": "node -e \"const { main_handler } = require('./dist/index'); main_handler()\""
   },
   "dependencies": {
     "dotenv": "^16.0.3",
