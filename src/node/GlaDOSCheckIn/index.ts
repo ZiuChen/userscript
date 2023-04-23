@@ -36,6 +36,17 @@ async function info(cookie: string) {
   }).then((res) => res.json() as Promise<{ data: { userInfo: { email: string } } }>)
 }
 
+/**
+ * 保留前num位邮箱地址
+ */
+function hideEmail(email: string, num: number) {
+  const atIndex = email.indexOf('@')
+  const prefix = email.slice(0, atIndex)
+  const maskedPrefix = prefix.slice(0, num).padEnd(prefix.length, '*')
+  const suffix = email.slice(atIndex)
+  return maskedPrefix + suffix
+}
+
 export async function gladosCheckin() {
   const msgList = []
 
@@ -47,8 +58,8 @@ export async function gladosCheckin() {
     const infoRes = await info(c)
 
     msgList.push({
-      email: infoRes?.data?.userInfo?.email,
-      leftDay: statusRes?.data?.leftDays,
+      email: hideEmail(infoRes?.data?.userInfo?.email, 4),
+      leftDay: parseInt(statusRes?.data?.leftDays.toString()),
       message: checkInRes?.message
     })
   }
