@@ -24,6 +24,10 @@
   - BiliBili自动风纪委评价
 - BJTU-Schedule-ics-csvGenerator
   - BJTU课程表生成器
+- BJTUBatchDownload
+  - 批量下载课程平台资源
+- BJTUCaptchaAutofill
+  - 识别并自动填写MIS验证码
 - BJTUCourse
   - BJTU选课脚本
 - McmodQuickSearch
