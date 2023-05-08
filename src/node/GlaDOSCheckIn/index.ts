@@ -64,12 +64,11 @@ export async function gladosCheckin() {
     })
   }
 
-  const message = msgList
-    .map(
-      (item) =>
-        `GLaDOS 签到结果\n邮箱: ${item.email}, 签到结果: ${item.message}, 剩余天数: ${item.leftDay}`
-    )
-    .join('\n')
+  const message =
+    'GlaDOS 签到结果: \n' +
+    msgList
+      .map((item) => `邮箱: ${item.email}, 签到结果: ${item.message}, 剩余天数: ${item.leftDay}`)
+      .join('\n')
 
   console.log(message)
 
