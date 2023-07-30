@@ -22,9 +22,7 @@ export default defineConfig({
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
   },
   plugins: [
-    nodeExternals({
-      deps: false // dont externalize deps from bundle
-    }),
+    nodeExternals(),
     publicPlugin({
       exclude: ['.sample.env']
     })

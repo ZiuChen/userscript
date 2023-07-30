@@ -1,6 +1,7 @@
 import { Plugin, ResolvedConfig } from 'vite'
 import fs from 'fs'
 import path from 'path'
+import url from 'url'
 
 export interface PublicPluginOptions {
   /**
@@ -9,6 +10,11 @@ export interface PublicPluginOptions {
    * @example ['index.html']
    */
   exclude?: string[]
+
+  /**
+   * A list of files to include from the public folder
+   */
+  include?: string[]
 }
 
 /**
@@ -17,6 +23,7 @@ export interface PublicPluginOptions {
  */
 export function publicPlugin(options?: PublicPluginOptions): Plugin {
   const exclude = options?.exclude || []
+  const include = options?.include || []
 
   let config: null | ResolvedConfig = null
 
@@ -29,6 +36,7 @@ export function publicPlugin(options?: PublicPluginOptions): Plugin {
       const publicDir = config?.publicDir
       if (!publicDir) return
 
+      const rootPath = path.resolve(url.fileURLToPath(new URL('.', import.meta.url)), '../')
       const publicPath = path.resolve(config?.root || '', publicDir)
       const distPath = path.resolve(config?.root || '', config?.build?.outDir || '')
 
@@ -37,6 +45,14 @@ export function publicPlugin(options?: PublicPluginOptions): Plugin {
         if (exclude.includes(file)) return
 
         const source = path.join(publicPath, file)
+        const destination = path.join(distPath, file)
+
+        fs.copyFileSync(source, destination)
+      })
+
+      // handle include files
+      include.forEach((file) => {
+        const source = path.join(rootPath, file)
         const destination = path.join(distPath, file)
 
         fs.copyFileSync(source, destination)

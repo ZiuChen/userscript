@@ -94,3 +94,41 @@ export async function notify(params: PushPlusParams) {
       })
   ]).catch((err) => console.log(err))
 }
+
+/**
+ * 保留前num位邮箱地址
+ */
+export function hideEmail(email: string, num: number) {
+  const atIndex = email.indexOf('@')
+  const prefix = email.slice(0, atIndex)
+  const maskedPrefix = prefix.slice(0, num).padEnd(prefix.length, '*')
+  const suffix = email.slice(atIndex)
+  return maskedPrefix + suffix
+}
+
+/**
+ * 解析cookie字符串
+ */
+export function parseCookieString(cookieString: string, domain?: string) {
+  const cookies = [] as any[]
+  if (cookieString) {
+    const cookiesArray = cookieString.split(';')
+    cookiesArray.forEach((cookie: string) => {
+      const [name, value] = cookie.trim().split('=')
+      const cookieObject = {
+        name: name,
+        value: decodeURIComponent(value),
+        domain: domain || '.glados.rocks'
+      }
+      cookies.push(cookieObject)
+    })
+  }
+  return cookies
+}
+
+/**
+ * 休眠函数
+ */
+export function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}

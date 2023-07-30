@@ -1,18 +1,21 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "vite build",
     "start": "node -e \"const { main_handler } = require('./dist/index'); main_handler()\"",
-    "ts": "EXEC_WITH_TSX=true tsx ./src/node/exec"
+    "ts": "EXEC_WITH_TSX=true tsx ./src/node/exec",
+    "layer": "cp package.json ./dist && cd ./dist && PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm i --production && rm package.json && rm package-lock.json && zip layer.zip ./node_modules -r && cd .. && mv ./dist/layer.zip ./layer.zip"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
     "form-data": "^4.0.0",
-    "node-fetch": "^3.3.1"
+    "node-fetch": "^2.6.7",
+    "puppeteer": "^19.5.2"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.6.3",
-    "tsx": "^3.12.6",
+    "tsx": "^3.12.7",
     "vite": "^4.3.1",
     "vite-plugin-node-externals": "^0.0.1"
   }

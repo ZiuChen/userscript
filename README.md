@@ -8,6 +8,7 @@
 
 - GladosCheckin
   - Glados签到脚本
+  - 需要通过环境变量`PUPPETEER_EXECUTABLE_PATH`指定 Chromium 位置
 - iKuuuCheckin
   - iKuuu签到脚本
   - 需要定期更新Cookie
