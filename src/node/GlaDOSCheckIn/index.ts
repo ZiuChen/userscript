@@ -26,9 +26,11 @@ async function checkIn(cookie: string) {
   const cookieArr = parseCookieString(cookie)
 
   await page.setCookie(...cookieArr)
-  await page.goto('https://glados.rocks/console/checkin')
+  await page.goto('https://glados.rocks/console/checkin', { timeout: 0 })
   await page.waitForSelector('.ui.positive.button')
   await page.click('.ui.positive.button')
+
+  console.log('checkin', 'click')
 
   await sleep(5 * 1000) // 等待签到完毕
 
@@ -64,20 +66,17 @@ export async function gladosCheckin() {
 
   if (!gladosCookies) return
 
-  // 并发请求
-  await Promise.all(
-    gladosCookies.map(async (c: string) => {
-      const checkInRes = await checkIn(c)
-      const statusRes = await status(c)
-      const infoRes = await info(c)
+  for (const c of gladosCookies) {
+    const checkInRes = await checkIn(c)
+    const statusRes = await status(c)
+    const infoRes = await info(c)
 
-      msgList.push({
-        email: hideEmail(infoRes?.data?.userInfo?.email, 4),
-        leftDay: parseInt(statusRes?.data?.leftDays.toString()),
-        message: checkInRes?.message || ''
-      })
+    msgList.push({
+      email: hideEmail(infoRes?.data?.userInfo?.email, 4),
+      leftDay: parseInt(statusRes?.data?.leftDays.toString()),
+      message: checkInRes?.message || ''
     })
-  )
+  }
 
   if (browser) {
     await browser.close()
