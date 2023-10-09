@@ -31,6 +31,8 @@
   - 识别并自动填写MIS验证码
 - BJTUCourse
   - BJTU选课脚本
+- GithubRepoInfo
+  - Github仓库信息显示
 - McmodQuickSearch
   - MCMOD快捷搜索
 - WeChatArticleEX
