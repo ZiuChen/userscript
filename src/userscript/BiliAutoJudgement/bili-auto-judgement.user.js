@@ -5,8 +5,8 @@
 // @supportURL   https://github.com/ZiuChen/userscript
 // @version      0.7.1
 // @author       ZiuChen
-// @updateURL    https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/BiliAutoJudgement/bili-auto-judgement.user.js
-// @downloadURL  https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/BiliAutoJudgement/bili-auto-judgement.user.js
+// @updateURL    https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/BiliAutoJudgement/bili-auto-judgement.user.js
+// @downloadURL  https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/BiliAutoJudgement/bili-auto-judgement.user.js
 // @match        https://www.bilibili.com/judgement*
 // @icon         https://fastly.jsdelivr.net/gh/ZiuChen/ZiuChen@main/avatar.jpg
 // @grant        none

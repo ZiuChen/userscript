@@ -5,8 +5,8 @@
 // @description  一键跳转到CurseForge，全速下载模组
 // @author       ZiuChen
 // @match        *://www.mcmod.cn/class/*
-// @updateURL    https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/McmodQuickSearch/userscript.user.js
-// @downloadURL  https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/McmodQuickSearch/userscript.user.js
+// @updateURL    https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/McmodQuickSearch/userscript.user.js
+// @downloadURL  https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/McmodQuickSearch/userscript.user.js
 // @require      http://libs.baidu.com/jquery/2.0.0/jquery.min.js
 // @icon         https://fastly.jsdelivr.net/gh/ZiuChen/ZiuChen@main/avatar.jpg
 // @grant        none

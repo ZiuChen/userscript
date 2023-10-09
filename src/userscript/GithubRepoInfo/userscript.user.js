@@ -4,12 +4,12 @@
 // @name:zh-CN         Github 仓库信息
 // @description        Get Github Repo info like repo size, create time and etc.
 // @description:zh-CN  获取 Github 仓库信息，如仓库体积、创建事件等
-// @version            0.0.1
+// @version            0.0.2
 // @author             Ziu
 // @source             https://github.com/ZiuChen/userscript
 // @supportURL         https://github.com/ZiuChen/userscript
-// @updateURL          https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/GithubRepoInfo/userscript.user.js
-// @downloadURL        https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/GithubRepoInfo/userscript.user.js
+// @updateURL          https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/GithubRepoInfo/userscript.user.js
+// @downloadURL        https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/GithubRepoInfo/userscript.user.js
 // @icon               https://fastly.jsdelivr.net/gh/ZiuChen/ZiuChen@main/avatar.jpg
 // @match              https://github.com/*
 // @grant              GM_getValue

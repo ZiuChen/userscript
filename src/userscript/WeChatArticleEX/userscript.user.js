@@ -5,8 +5,8 @@
 // @version      1.2.2
 // @author       Ziu
 // @match        *://mp.weixin.qq.com/s*
-// @updateURL    https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/WeChatArticleEX/userscript.user.js
-// @downloadURL  https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/WeChatArticleEX/userscript.user.js
+// @updateURL    https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/WeChatArticleEX/userscript.user.js
+// @downloadURL  https://fastly.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/WeChatArticleEX/userscript.user.js
 // @require      https://fastly.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
 // @require      https://fastly.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js
 // @grant        GM_registerMenuCommand
