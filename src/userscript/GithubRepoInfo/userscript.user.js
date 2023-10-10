@@ -4,7 +4,7 @@
 // @name:zh-CN         Github 仓库信息
 // @description        Get Github Repo info like repo size, create time and etc.
 // @description:zh-CN  获取 Github 仓库信息，如仓库体积、创建事件等
-// @version            0.0.2
+// @version            0.0.3
 // @author             Ziu
 // @source             https://github.com/ZiuChen/userscript
 // @supportURL         https://github.com/ZiuChen/userscript
@@ -82,7 +82,7 @@ async function showRepoInfo(repo) {
 
   const repoInfo = await fetchRepoInfo(repo)
 
-  alert(repoInfo)
+  repoInfo && alert(repoInfo)
 }
 
 /**
@@ -116,10 +116,12 @@ async function fetchRepoInfo(repo) {
     .then((res) => {
       console.log('Github Server Response:', res)
 
-      const { size, created_at } = res
+      const { size, created_at, updated_at, message } = res
 
       if (!size || !created_at) {
-        throw new Error('Repo info is not available.')
+        throw new Error(
+          'Repo info is not available. Please checkout Github Token is valid. ' + message
+        )
       }
 
       const sizeText = `Size: ${formatSize(size)}`
