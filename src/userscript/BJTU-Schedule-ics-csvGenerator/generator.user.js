@@ -219,7 +219,7 @@ function scheduleGetTable(isOrigin) {
           dateStr = dateStr.substring(dateStr.indexOf("第") + 1, dateStr.indexOf("周")) // 预处理
           courseTmp.initInfo = "第" + dateStr + "周"
           courseTmp.date = dateStr2Arr(dateStr)
-          courseTmp.teacher = courseListTmp[i][j].querySelectorAll("i")[k].innerText
+          courseTmp.teacher = courseListTmp[i][j].querySelectorAll("i")[k]?.innerText || ""
           courseTmp.allInfo =
             courseTmp.name +
             " " +
