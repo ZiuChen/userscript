@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name         Lock Screen
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @description  Locks given websites.
 // @author       Sarfraz, ZiuChen
 // @homepage     https://github.com/ZiuChen
 // @supportURL   https://github.com/ZiuChen/userscript/issues
 // @run-at       document-start
 // @require      https://registry.npmmirror.com/jquery/3.7.1/files/dist/jquery.min.js
-// @updateURL    https://jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/lock-screen/index.user.js
-// @downloadURL  https://jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/lock-screen/index.user.js
+// @updateURL    https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/lock-screen/index.user.js
+// @downloadURL  https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/lock-screen/index.user.js
 // @icon         data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjNzQ3ZDhjIiBkPSJNMjAuNSAxM2EyLjUgMi41IDAgMCAxIDIuNSAyLjV2LjVhMSAxIDAgMCAxIDEgMXY0YTEgMSAwIDAgMS0xIDFoLTVhMSAxIDAgMCAxLTEtMXYtNGExIDEgMCAwIDEgMS0xdi0uNWEyLjUgMi41IDAgMCAxIDIuNS0yLjVtMCAxYTEuNSAxLjUgMCAwIDAtMS41IDEuNXYuNWgzdi0uNWExLjUgMS41IDAgMCAwLTEuNS0xLjVNMjAgNEgydjEyaDEzdjJoLTJ2MmgydjJIN3YtMmgydi0ySDJhMiAyIDAgMCAxLTItMlY0YzAtMS4xMS44OS0yIDItMmgxOGEyIDIgMCAwIDEgMiAydjcuNTNjLS41OS0uMzQtMS4yNy0uNTMtMi0uNTN6Ii8+PC9zdmc+
 // ==/UserScript==
 
