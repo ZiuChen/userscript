@@ -1,13 +1,12 @@
 // ==UserScript==
 // @name         Lock Screen
 // @namespace    http://tampermonkey.net/
-// @version      1.0.1
+// @version      1.1.0
 // @description  Locks given websites.
 // @author       Sarfraz, ZiuChen
 // @homepage     https://github.com/ZiuChen
 // @supportURL   https://github.com/ZiuChen/userscript/issues
 // @run-at       document-start
-// @require      https://registry.npmmirror.com/jquery/3.7.1/files/dist/jquery.min.js
 // @updateURL    https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/lock-screen/index.user.js
 // @downloadURL  https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/lock-screen/index.user.js
 // @icon         data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjNzQ3ZDhjIiBkPSJNMjAuNSAxM2EyLjUgMi41IDAgMCAxIDIuNSAyLjV2LjVhMSAxIDAgMCAxIDEgMXY0YTEgMSAwIDAgMS0xIDFoLTVhMSAxIDAgMCAxLTEtMXYtNGExIDEgMCAwIDEgMS0xdi0uNWEyLjUgMi41IDAgMCAxIDIuNS0yLjVtMCAxYTEuNSAxLjUgMCAwIDAtMS41IDEuNXYuNWgzdi0uNWExLjUgMS41IDAgMCAwLTEuNS0xLjVNMjAgNEgydjEyaDEzdjJoLTJ2MmgydjJIN3YtMmgydi0ySDJhMiAyIDAgMCAxLTItMlY0YzAtMS4xMS44OS0yIDItMmgxOGEyIDIgMCAwIDEgMiAydjcuNTNjLS41OS0uMzQtMS4yNy0uNTMtMi0uNTN6Ii8+PC9zdmc+
@@ -15,7 +14,15 @@
 
 'use strict'
 
-const CSS_CODE = /* css */ `.userscript-lock-screen__mask {
+const CSS_CODE = /* css */ `body {
+  filter: blur(10px) !important;
+}
+
+body[data-userscript-lock-screen="false"] {
+  filter: none !important;
+}
+
+.userscript-lock-screen__mask {
   position: fixed;
   z-index: 9999;
   top: 0;
@@ -58,9 +65,7 @@ const CSS_CODE = /* css */ `.userscript-lock-screen__mask {
   }
 }`
 
-const TIMEOUT = 0.5 // minutes
 const PIN = localStorage.getItem('userscript-lock-screen/pwd')
-let idleTimer = null
 
 if (!PIN) {
   const result = prompt('Enter Password')
@@ -74,38 +79,35 @@ if (!PIN) {
 }
 
 insertCSS(CSS_CODE)
-hide()
-setupInterval()
 
-$('*').bind(
-  'mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick',
-  () => {
-    clearInterval(idleTimer)
-    setupInterval()
-  }
-)
+setTimeout(() => {
+  hide()
+})
 
-function setupInterval() {
-  idleTimer = setInterval(hide, TIMEOUT * 60000)
-}
+window.addEventListener('blur', hide)
 
 function hide() {
-  const container = document.createElement('div')
-  container.className = 'userscript-lock-screen__mask'
-  document.body.appendChild(container)
+  if (document.documentElement.querySelector('#userscript-lock-screen')) {
+    // Already locked
+    return
+  }
 
-  const form = document.createElement('form')
-  form.className = 'userscript-lock-screen__form'
+  const container = document.createElement('div')
+  container.id = 'userscript-lock-screen'
+  container.className = 'userscript-lock-screen__mask'
+  document.documentElement.appendChild(container)
+
   const input = document.createElement('input')
   input.type = 'password'
   input.className = 'userscript-lock-screen__input'
   input.autocomplete = 'off'
-  form.appendChild(input)
-  container.appendChild(form)
 
-  input.oninput = function () {
+  container.appendChild(input)
+
+  input.oninput = () => {
     if (input.value === PIN) {
-      document.body.removeChild(container)
+      document.documentElement.removeChild(container)
+      document.body.dataset.userscriptLockScreen = false
     }
   }
 }
