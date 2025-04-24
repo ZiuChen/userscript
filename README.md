@@ -1,57 +1,17 @@
-**代码仅供学习交流使用，请于下载后24小时内删除，因使用脚本造成的任何后果开发者概不负责。**
+# Useful UserScript Set
 
-## 脚本分类 :books:
+## Userscript
 
-### NodeJS脚本
-
-运行环境: Node.js，支持云函数部署，支持PUSHPLUS消息推送
-
-- GladosCheckin
-  - Glados签到脚本
-  - 需要通过环境变量`PUPPETEER_EXECUTABLE_PATH`指定 Chromium 位置
-- iKuuuCheckin
-  - iKuuu签到脚本
-  - 需要定期更新Cookie
-- v2FreeCheckin
-  - v2Free签到脚本
-
-[使用指南 Deploy Guide](./docs/Deploy%20Guide.md)
-
-### 用户脚本
-
-运行环境：Tampermonkey拓展
-
-- BiliAutoJudgement
-  - BiliBili自动风纪委评价
-- BJTU-Schedule-ics-csvGenerator
-  - BJTU课程表生成器
-- BJTUBatchDownload
-  - 批量下载课程平台资源
-- BJTUCaptchaAutofill
-  - 识别并自动填写MIS验证码
-- BJTUCourse
-  - BJTU选课脚本
-- GithubRepoInfo
-  - Github仓库信息显示
-- McmodQuickSearch
-  - MCMOD快捷搜索
-- WeChatArticleEX
-  - 微信文章浏览功能增强
-
-### 其他脚本
-
-- JuejinCookie
-  - 批量获取稀土掘金账号Cookie
-- JuejinDailyPublish
-  - 稀土掘金每日沸点任务
-- JuejinDraw
-  - 码上掘金像素画脚本
-- uToolsQuickCommands
-  - uTools快捷命令合集
-
-**具体介绍详见项目文件夹内的README.md**
-
-## 请我喝杯咖啡 :coffee:
-
-![Donate](https://fastly.jsdelivr.net/gh/ZiuChen/NO-FLASH-Upload@master/doc/img/Buy%20me%20a%20coffee.png)
-
+| Name | Description |
+|------|-------------|
+| [BiliAutoJudgement](./src/userscript/BiliAutoJudgement/README.md) | B站风纪委自动评分工具 |
+| [BJTU-Schedule-ics-csvGenerator](./src/userscript/BJTU-Schedule-ics-csvGenerator/README.md) | 北京交通大学生成 ICS/CSV 格式的课程表 |
+| [BJTUCaptchaAutofill](./src/userscript/BJTUCaptchaAutofill/README.md) | 北京交通大学MIS验证码自动识别&填写 |
+| [BJTUCourse](./src/userscript/BJTUCourse/README.md) | 北京交通大学抢课工具 |
+| [deepseek-snapshot](./src/userscript/deepseek-snapshot/README.md) | DeepSeek 网页快照工具 |
+| [GithubRepoInfo](./src/userscript/GithubRepoInfo/README.md) | GitHub 仓库信息展示工具 |
+| [lock-screen](./src/userscript/lock-screen/README.md) | 网页锁屏工具 |
+| [McmodQuickSearch](./src/userscript/McmodQuickSearch/README.md) | Minecraft 模组快速搜索工具 |
+| [snapshot-everything](./src/userscript/snapshot-everything/README.md) | 网页内容快照工具 |
+| [tap-to-tab](./src/userscript/tap-to-tab/README.md) | 点击转标签页工具 |
+| [WeChatArticleEX](./src/userscript/WeChatArticleEX/README.md) | 微信公众号文章增强工具 |
