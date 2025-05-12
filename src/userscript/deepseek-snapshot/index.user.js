@@ -1,9 +1,11 @@
 // ==UserScript==
 // @name         Deepseek Snapshot
-// @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @namespace    https://github.com/ZiuChen
+// @version      1.0.1
 // @description  Take snapshot for chat history on Deepseek.
 // @author       ZiuChen
+// @homepage     https://github.com/ZiuChen
+// @supportURL   https://github.com/ZiuChen/userscript/issues
 // @match        https://chat.deepseek.com/*
 // @icon         https://favicon.im/deepseek.com
 // @require      https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js

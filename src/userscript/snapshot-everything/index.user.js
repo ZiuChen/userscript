@@ -1,9 +1,11 @@
 // ==UserScript==
 // @name         Snapshot Everything
-// @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @namespace    https://github.com/ZiuChen
+// @version      1.0.1
 // @description  Take snapshot on any site for any DOM.
 // @author       ZiuChen
+// @homepage     https://github.com/ZiuChen
+// @supportURL   https://github.com/ZiuChen/userscript/issues
 // @match        *://*/*
 // @icon         data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik00IDRoM2wyLTJoNmwyIDJoM2EyIDIgMCAwIDEgMiAydjEyYTIgMiAwIDAgMS0yIDJINGEyIDIgMCAwIDEtMi0yVjZhMiAyIDAgMCAxIDItMm04IDNhNSA1IDAgMCAwLTUgNWE1IDUgMCAwIDAgNSA1YTUgNSAwIDAgMCA1LTVhNSA1IDAgMCAwLTUtNW0wIDJhMyAzIDAgMCAxIDMgM2EzIDMgMCAwIDEtMyAzYTMgMyAwIDAgMS0zLTNhMyAzIDAgMCAxIDMtMyIvPjwvc3ZnPg==
 // @require      https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js

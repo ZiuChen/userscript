@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Lock Screen
-// @namespace    http://tampermonkey.net/
-// @version      1.1.0
+// @namespace    https://github.com/ZiuChen
+// @version      1.1.1
 // @description  Locks given websites.
 // @author       Sarfraz, ZiuChen
 // @homepage     https://github.com/ZiuChen
