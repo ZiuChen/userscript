@@ -10,6 +10,7 @@
 | [BJTUCourse](./src/userscript/BJTUCourse/README.md) | 北京交通大学抢课工具 |
 | [deepseek-snapshot](./src/userscript/deepseek-snapshot/README.md) | DeepSeek 网页快照工具 |
 | [GithubRepoInfo](./src/userscript/GithubRepoInfo/README.md) | GitHub 仓库信息展示工具 |
+| [highlight-translation](./src/userscript/highlight-translation/README.md) | 划词翻译 |
 | [lock-screen](./src/userscript/lock-screen/README.md) | 网页锁屏工具 |
 | [McmodQuickSearch](./src/userscript/McmodQuickSearch/README.md) | Minecraft 模组快速搜索工具 |
 | [snapshot-everything](./src/userscript/snapshot-everything/README.md) | 网页内容快照工具 |
