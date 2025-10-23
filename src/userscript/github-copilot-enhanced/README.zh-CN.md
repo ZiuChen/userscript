@@ -38,7 +38,7 @@
 
 ### 安装
 1. 安装 Tampermonkey 或其他 UserScript 管理器
-2. [点此安装](./index.user.js) 该脚本
+2. [点此安装](https://github.com/ZiuChen/userscript/raw/refs/heads/main/src/userscript/github-copilot-enhanced/index.user.js) 该脚本
 
 ## 注意事项
 

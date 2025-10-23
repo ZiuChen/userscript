@@ -38,7 +38,7 @@ This script enables longer chat history retention by saving conversations to the
 
 ### Installation
 1. Install Tampermonkey or another UserScript manager
-2. [Click here to install](./index.user.js) the script
+2. [Click here to install](https://github.com/ZiuChen/userscript/raw/refs/heads/main/src/userscript/github-copilot-enhanced/index.user.js) the script
 
 ## Notes
 
