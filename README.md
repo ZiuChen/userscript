@@ -9,6 +9,7 @@
 | [BJTUCaptchaAutofill](./src/userscript/BJTUCaptchaAutofill/README.md) | 北京交通大学MIS验证码自动识别&填写 |
 | [BJTUCourse](./src/userscript/BJTUCourse/README.md) | 北京交通大学抢课工具 |
 | [deepseek-snapshot](./src/userscript/deepseek-snapshot/README.md) | DeepSeek 网页快照工具 |
+| [duplicate-tab-cleaner](./src/userscript/duplicate-tab-cleaner/README.md) | 重复标签页清理工具 |
 | [Github Copilot Enhanced](./src/userscript/github-copilot-enhanced/README.md) | GitHub Copilot 增强 |
 | [GithubRepoInfo](./src/userscript/GithubRepoInfo/README.md) | GitHub 仓库信息展示工具 |
 | [highlight-translation](./src/userscript/highlight-translation/README.md) | 划词翻译 |
