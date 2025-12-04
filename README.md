@@ -17,4 +17,5 @@
 | [McmodQuickSearch](./src/userscript/McmodQuickSearch/README.md) | Minecraft 模组快速搜索工具 |
 | [snapshot-everything](./src/userscript/snapshot-everything/README.md) | 网页内容快照工具 |
 | [tap-to-tab](./src/userscript/tap-to-tab/README.md) | 点击转标签页工具 |
+| [websocket-hook](./src/userscript/websocket-hook/README.md) | 劫持网页的 WebSocket 消息并将其记录到全局数组，便于调试或分析 |
 | [WeChatArticleEX](./src/userscript/WeChatArticleEX/README.md) | 微信公众号文章增强工具 |
