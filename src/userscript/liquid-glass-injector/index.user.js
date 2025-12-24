@@ -1,17 +1,21 @@
 // ==UserScript==
 // @name         Liquid Glass Injector
 // @namespace    https://github.com/ZiuChen
-// @version      1.0.0
+// @version      1.1.0
 // @description  Injects a liquid glass effect element into the page via menu command.
 // @author       ZiuChen
 // @homepage     https://github.com/ZiuChen
 // @supportURL   https://github.com/ZiuChen/userscript/issues
 // @match        *://*/*
-// @icon         data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMSA1SDhsNC00bDQgNGgtM3Y0LjQzYy0uNzUuNDYtMS40MiAxLjAzLTIgMS42OXptMTEgNmwtNC00djNhNi43NDcgNi43NDcgMCAwIDAtNyA2LjE3QTMuMDA2IDMuMDA2IDAgMCAwIDkuMTcgMjBBMy4wMDYgMy4wMDYgMCAwIDAgMTMgMjEuODNBMy4wMSAzLjAxIDAgMCAwIDE0LjgzIDE4Yy0uMy0uODYtLjk4LTEuNTMtMS44My0xLjgzYy40Ny00IDQuNDctNC4yIDQuOTUtNC4ydjN6bS0xMS4zNy41OUE3LjYzIDcuNjMgMCAwIDAgNiAxMFY3bC00IDRsNCA0di0zYzEuMzQuMDMgMi42My41IDMuNjQgMS40Yy4yNS0uNjQuNTgtMS4yNS45OS0xLjgxIi8+PC9zdmc+
-// @grant        unsafeWindow
-// @run-at       document-start
-// @updateURL    https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/liquid-glass/index.user.js
-// @downloadURL  https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/liquid-glass/index.user.js
+// @icon         data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMiAyMGMtNC40MSAwLTgtMy41OS04LThzMy41OS04IDgtOHM4IDMuNTkgOCA4cy0zLjU5IDgtOCA4bTAtMThBMTAgMTAgMCAwIDAgMiAxMmExMCAxMCAwIDAgMCAxMCAxMGg4YTIgMiAwIDAgMCAyLTJ2LThBMTAgMTAgMCAwIDAgMTIgMm0xIDVoLTJ2NEg3djJoNHY0aDJ2LTRoNHYtMmgtNHoiLz48L3N2Zz4=
+// @grant        GM_registerMenuCommand
+// @grant        GM_setValue
+// @grant        GM_getValue
+// @grant        GM_addValueChangeListener
+// @grant        GM_removeValueChangeListener
+// @run-at       document-end
+// @updateURL    https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/liquid-glass-injector/index.user.js
+// @downloadURL  https://cdn.jsdelivr.net/gh/ZiuChen/userscript@main/src/userscript/liquid-glass-injector/index.user.js
 // ==/UserScript==
 
 const IMAGES = {
